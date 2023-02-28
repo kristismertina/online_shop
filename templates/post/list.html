@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+{% block title %}My Blog{% endblock %}
+{% block content %}
+{% include "blog/header.html" %}
+<section id="post">
+    <p class="flex justify-center m-20 text-5xl text-gray-900 dark:text-white">Блог о правильном питании</p>
+    {% for comm in comment %}
+        <p>{{ comm.name }}</p>
+    {% endfor %}
+    {% for post in posts %}
+        <details>
+            <summary class="summary">
+                <div class="p-4 m-6 mb-0 text-2xl text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-900 dark:text-gray-300" role="alert">
+                    <span class="font-medium">{{ post.title }}</span> 
+                  </div>
+                <p class="text-gray-600 text-xs ">
+                    Опубликовано {{ post.publish }}. Автор {{ post.author }}
+                </p> 
+            </summary>
+            <p class="m-20 font-light text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left"> {{ post.body}}</p>
+        </details>
+    {% endfor %}
+    {% include "blog/paginator.html" with page=page_obj %}
+
+{% endblock %}
+</section>
+  
+
+

@@ -1,0 +1,15 @@
+{% load static %}
+<div class="cart">
+    {% with total_items=cart|length %}
+        {% if cart|length > 0 %}
+                <a class="cart_min" href="{% url 'cart:cart_detail' %}"><img src= '{% static "images/shop.png" %}'>
+                    <div id="total_items" class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">{{ total_items }}</div>
+                </a>
+        {% else %}
+        <a class="cart_min" href="{% url 'cart:cart_detail' %}"><img src= '{% static "images/shop.png" %}'></a>
+        {% endif %}
+    {% endwith %}
+</div>
+
+
+        

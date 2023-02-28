@@ -1,0 +1,15 @@
+{
+  "name": "mysite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "start": "npx tailwindcss -i input.css -o ./static/css/style_tailwind.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "flowbite": "^1.6.3"
+  }
+}

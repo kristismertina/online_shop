@@ -1,0 +1,79 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title %}
+    Your shopping cart
+{% endblock %}
+{% block content %}
+<div class="tabel">
+    <div class="relative overflow-x-auto mt-20 ">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-20 p-20">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 rounded-l-lg">
+                        Product name
+                    </th>
+                    <th scope="col" class="px-6 py-3 rounded-l-lg">
+                        ima
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Qty
+                    </th>
+                    <th scope="col" class="px-6 py-3 rounded-r-lg">
+                        Price
+                    </th>
+                    <th scope="col" class="px-6 py-3 rounded-r-lg">
+                        Remove
+                    </th>
+                    <th scope="col" class="px-6 py-3 rounded-r-lg">
+                        Total Price
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    {% with product=item.product %}
+                    <tr class="bg-white dark:bg-gray-800">
+                        <th scope="row" class="px-6 mt-5 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ product.name }}
+                        </th>
+                        <td class="px-6 py-4 w-4">
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="
+                                    {% if product.image %}
+                                        {{ product.image.url }}
+                                    {% else %}
+                                        {% static 'img/no_image.png' %}
+                                    {% endif %}">
+                            </a>
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ item.quantity }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ item.price }}руб
+                        </td>
+                        <td class="px-6 py-4"><a href='{% url "cart:cart_remove" product.id%}' class="group">Remove</a></td>
+                        <td class="px-6 py-4">
+                            {{ item.total_price }}руб
+                        </td>
+                    </tr>
+                    
+            </tbody>
+                    {% endwith %}
+                {% endfor %}
+        </table>
+</div>
+    <div class="m-20 ml-70 text-[20px] text-center">
+        <tfoot>
+            <tr class="font-semibold text-gray-900 dark:text-white">
+                <th scope="row" class="px-6 py-3 text-base">Total</th>
+                <td class="px-6 py-3">{{ cart.get_total_price }}руб</td>
+            </tr>
+        </tfoot>
+    </div>
+    <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+        <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"><a href="{% url 'shop:product_list' %}">Вернуться к товарам</a></button>
+        <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"><a href="{% url 'orders:order_create' %}">Оформить заказ</a></button>
+    </div>
+</div>
+{% endblock %}

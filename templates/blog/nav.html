@@ -1,0 +1,76 @@
+{% load static %}
+<style>
+    .nav_container{
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      
+    }
+    .dropbtn {
+      background-color: #8b8b8b;
+      color: white;
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 15px;
+      cursor: pointer;
+      margin-right: 20px;
+    }
+    
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #ffffff;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .dropdown-content a:hover {background-color: #f1f1f1}
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    .dropdown:hover .dropbtn {
+      background-color: #bdbdbd;
+    }
+</style>
+
+<div class="nav_container">
+  <nav id="navbar-example2" class="navbar navbar-light px-3">
+      <div id="list">
+          <a class="navbar-brand" href="/"><img src= '{% static "images/veg.png" %}'></a>
+      </div>
+      {% include "cart/cart.html" %}
+      <ul class="nav nav-pills">
+        <div class="dropdown">
+          <button class="dropbtn">Категории</button>
+          <div class="dropdown-content">
+              <li {% if not category %}class="selected"{% endif %}>
+                  <a href="{% url 'shop:product_list' %}">Все продукты</a>
+              </li>
+              {% for c in categories %}
+                  <li {% if category.slug == c.slug %}class="selected"{% endif %}>
+                      <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                  </li>
+              {% endfor %}
+          </div>
+        </div>
+      </ul>
+    </nav>
+</div>
+
+

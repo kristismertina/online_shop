@@ -1,0 +1,30 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.title }}{% else %}Products{% endif %}
+{% endblock %}
+{% block content %}
+    <div class="product-detail">
+        <div class="margin_prod_detail">
+            <div class="order-info mt-20 text-center font-medium"><h1>{{ product.name }}</h1></div>
+
+
+
+            <img class="h-auto max-w-lg mx-auto" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+
+
+            
+            <div class="order-info mt-20 text-center mt-0"><p class="price">{{ product.price }} руб</p></div>
+            
+            <div class="order-info mt-3 text-center"><form action="{% url 'cart:cart_add' product.id %}" method="post">
+                {{ cart_product_form }}
+                {% csrf_token %}
+                <p class="place_order"><input type="submit"  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" value="Add to cart"></p>
+            </form></div>
+            
+            <p class="m-20 font-light text-gray-500 dark:text-gray-400 first-line:uppercase first-line:tracking-widest first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:mr-3 first-letter:float-left"> {{ product.description }}</p>
+        </div>
+    </div>
+{% endblock %}
+
+

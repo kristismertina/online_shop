@@ -1,0 +1,76 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+    <h1>Checkout</h1>
+    <div class="order-info mt-20 text-center">
+        <h3>Your order</h3>
+    </div>
+        <ul>
+            <div class="tabel">
+                <div class="relative overflow-x-auto mt-8 ">
+                    <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400 mt-3 p-5">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 rounded-l-lg">
+                                    Product name
+                                </th>
+                                <th scope="col" class="px-6 py-3 rounded-l-lg">
+                                    ima
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Qty
+                                </th>
+                                <th scope="col" class="px-6 py-3 rounded-r-lg">
+                                    Price
+                                </th>
+                                <th scope="col" class="px-6 py-3 rounded-r-lg">
+                                    Remove
+                                </th>
+                                <th scope="col" class="px-6 py-3 rounded-r-lg">
+                                    Total Price
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart %}
+                                {% with product=item.product %}
+                                <tr class="bg-white dark:bg-gray-800">
+                                    <th scope="row" class="px-6 mt-5 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ product.name }}
+                                    </th>
+                                    <td class="px-6 py-4 w-4">
+                                        <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}"></a>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ item.quantity }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ item.price }}руб
+                                    </td>
+                                    <td class="px-6 py-4"><a href='{% url "cart:cart_remove" product.id%}' class="group">Remove</a></td>
+                                    <td class="px-6 py-4">
+                                        {{ item.total_price }}руб
+                                    </td>
+                                </tr>
+                                
+                        </tbody>
+                                {% endwith %}
+                            {% endfor %}
+                    </table>
+            </div>
+            <div class="order-info mt-20 text-center">
+                <p>Total: {{ cart.get_total_price }} руб</p>
+            </div>
+    <div class="relative z-0 w-full m-20 group">
+        <div id="form_orders" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+            <form action="." method="post" class="order-form">
+                <p class="border_form">{{ form.as_p }}</p>
+                <p class="place_order"><input type="submit"  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" value="Place order"></p>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+  
+{% endblock %}
